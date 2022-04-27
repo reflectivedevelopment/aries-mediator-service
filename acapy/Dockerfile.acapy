@@ -1,4 +1,4 @@
-FROM bcgovimages/von-image:py36-1.16-1
+FROM ghcr.io/indicio-tech/von-image:py36-1.16-1ssl
 
 USER root
 

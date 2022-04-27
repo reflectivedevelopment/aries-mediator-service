@@ -6,3 +6,10 @@ services:
     ports: # Uncomment to access caddy outside of containers
       - 80:80
       - 443:443
+
+  mediator:
+    depends_on:
+      # mediator-controller:
+      #   condition: service_healthy
+    db:
+      condition: service_healthy
