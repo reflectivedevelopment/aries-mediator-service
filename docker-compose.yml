@@ -18,12 +18,17 @@ services:
       dockerfile: acapy/Dockerfile.acapy
     restart: unless-stopped
     volumes:
-      - ${CA_CERT}:/home/indy/ca.crt    
+      - ${CA_CERT}:/home/indy/ca.crt
+      - ./client-key.pem:/home/indy/client-key.pem
+      - ./client-cert.pem:/home/indy/clieny-cert.pem
     environment:
+      - PGSSLCERT=client-cert.pem
+      - PGSSLKEY=client-key.pem
+      - PGSSLROOTCERT=ca.crt
       - ENV=${ENV:-local}
       - POSTGRESQL_HOST=${POSTGRESQL_HOST:-db}
       - POSTGRESQL_PORT=${POSTGRESQL_PORT:-5432}
-      - ACAPY_WALLET_STORAGE_CONFIG={"tls":"Prefer","tls_ca":"/home/indy/ca.crt","url":"${POSTGRESQL_HOST:-db}:${POSTGRESQL_PORT:-5432}","wallet_scheme":"DatabasePerWallet"}
+      - ACAPY_WALLET_STORAGE_CONFIG={"url":"${POSTGRESQL_HOST:-db}","wallet_scheme":"DatabasePerWallet"}
       - ACAPY_WALLET_STORAGE_CREDS={"account":"${POSTGRESQL_USER:-postgres}","password":"${POSTGRESQL_PASSWORD:-development}","admin_account":"${POSTGRESQL_ADMIN_USER:-postgres}","admin_password":"${POSTGRESQL_ADMIN_PASSWORD:-development}"}
       - ACAPY_WALLET_NAME=${MEDIATOR_WALLET_NAME:-mediator}
       - ACAPY_WALLET_KEY=${MEDIATOR_WALLET_KEY:-testing}
@@ -50,6 +55,9 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    ports:
+      - 3000:3000
+      - 3001:3001
 
   db:
     image: postgres:10

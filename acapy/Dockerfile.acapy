@@ -21,4 +21,8 @@ COPY acapy/configs configs
 
 RUN aca-py --version > ./acapy-version.txt
 
+COPY aries_askar-0.2.7-py3-none-any.whl aries_askar-0.2.7-py3-none-any.whl
+
+RUN pip install -I aries_askar-0.2.7-py3-none-any.whl
+
 ENTRYPOINT ["bash", "./start.sh"]
