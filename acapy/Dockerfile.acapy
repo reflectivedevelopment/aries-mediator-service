@@ -16,6 +16,9 @@ RUN pip install -r ./requirements-latest.txt
 
 # Copy the necessary files from the mediator sub-folder
 COPY acapy/start.sh start.sh
+# File name cannot be profile...
+COPY acapy/prof.py prof.py
+
 RUN chmod +x start.sh
 COPY acapy/configs configs
 
