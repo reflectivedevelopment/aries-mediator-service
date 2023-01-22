@@ -8,6 +8,28 @@ This repository provides a simple process for a developer to run an Aries mediat
 
 This is setup to be run as is with a simple `docker-compose up`. When run it will fire up the following containers:
 
+### Performance Testing Askar
+
+This build is configured to support Askar profiling using prof. This requires the Docker host to be running the same version of Ubuntu of the docker container. May also need to adjust the following line in Dockerfile to match current linux header.
+
+RUN apt update && apt install -y linux-tools-common linux-tools-generic linux-tools-5.4.0-137-generic
+
+After building the container, and running the tests, shutdown the mediator via API call first. Then shutdown the docker container by stopping the containers.
+
+You must start the service manually by entering the mediator container and running start.sh
+
+Then restart the container.
+
+Enter the container.
+
+docker-compose exec mediator /bin/bash
+
+Review performance data
+
+perf report -i perf.dat.old
+
+If updating, please keep in mind that a debug version of Askar may be necessary.
+
 ### ngrok
 
 You need to accept inbound connections. Most of us are behind firewalls or have impermanent IP addresses. Ngrok is used as a proxy to work around this. It will provide the URL that will act as a front door for your wallet to access the mediator service.

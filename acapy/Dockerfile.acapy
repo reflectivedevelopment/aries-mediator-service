@@ -2,6 +2,11 @@ FROM ghcr.io/indicio-tech/von-image:py36-1.16-1ssl
 
 USER root
 
+RUN apt update && apt upgrade -y
+
+# We have to run this on an Ubuntu 18.04 docker host for this to work
+RUN apt update && apt install -y binutils linux-tools-common linux-tools-generic linux-tools-5.4.0-137-generic
+
 RUN mkdir -p /acapy-mediator
 WORKDIR /acapy-mediator
 
@@ -28,11 +33,5 @@ COPY aries_askar-0.2.5-py3-none-any.whl aries_askar-0.2.5-py3-none-any.whl
 
 RUN pip install -I aries_askar-0.2.5-py3-none-any.whl
 
-RUN apt update && apt upgrade -y
-
-# https://stackoverflow.com/questions/42921793/linux-perf-tool-cannot-run-inside-docker-images
-# We may have kernel limitations but let us roll with it
-RUN apt update && apt install -y linux-tools-common linux-tools-generic
-
-
-ENTRYPOINT ["bash", "./start.sh"]
+#ENTRYPOINT ["bash", "./start.sh"]
+ENTRYPOINT ["sleep", "infinity"]

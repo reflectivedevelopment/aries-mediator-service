@@ -9,7 +9,8 @@ echo "Starting agent with endpoint(s): ${MEDIATOR_URL} ws${WS_MEDIATOR_URL}"
 
 #exec "/home/indy/.pyenv/libexec/pyenv" exec python3 -m cProfile /home/indy/.pyenv/versions/3.6.13/lib/python3.6/site-packages/aries_cloudagent/__main__.py start \
 #exec "/home/indy/.pyenv/libexec/pyenv" exec python3 -m aries_cloudagent start \
-exec "/home/indy/.pyenv/libexec/pyenv" exec ./prof.py start \
+#exec "/home/indy/.pyenv/libexec/pyenv" exec ./prof.py start \
+exec "/home/indy/.pyenv/libexec/pyenv" exec perf record -F 99 --call-graph dwarf -g -o perf.dat python3 -m aries_cloudagent start \
     --auto-provision \
     --arg-file ${MEDIATOR_ARG_FILE} \
     --label "${MEDIATOR_AGENT_LABEL}" \

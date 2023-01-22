@@ -16,6 +16,7 @@ services:
     build:
       context: .
       dockerfile: acapy/Dockerfile.acapy
+    privileged: true
     restart: unless-stopped
     volumes:
       - ${CA_CERT}:/home/indy/ca.crt    
