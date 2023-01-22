@@ -28,4 +28,11 @@ COPY aries_askar-0.2.5-py3-none-any.whl aries_askar-0.2.5-py3-none-any.whl
 
 RUN pip install -I aries_askar-0.2.5-py3-none-any.whl
 
+RUN apt update && apt upgrade -y
+
+# https://stackoverflow.com/questions/42921793/linux-perf-tool-cannot-run-inside-docker-images
+# We may have kernel limitations but let us roll with it
+RUN apt update && apt install -y linux-tools-common linux-tools-generic
+
+
 ENTRYPOINT ["bash", "./start.sh"]
