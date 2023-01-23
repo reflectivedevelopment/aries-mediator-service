@@ -26,7 +26,15 @@ docker-compose exec mediator /bin/bash
 
 Review performance data
 
-perf report -i perf.dat.old
+perf report -i perf.dat.old # interactive
+perf report -i perf.dat --stdio -n -g folded > perfdump.txt # dump with stack trace
+perf script -i perf.dat > out.perf # for flamegraph
+
+ docker cp b1e62de2989d:/acapy-mediator/out.perf ./
+
+https://github.com/brendangregg/FlameGraph
+
+cat ~/dev/hyperledger/aries-mediator-service/out.perf | ./stackcollapse-perf.pl --all | ./flamegraph.pl --hash > mediator.svg
 
 If updating, please keep in mind that a debug version of Askar may be necessary.
 
